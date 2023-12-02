@@ -5,7 +5,7 @@
 
 
 ## Part 1
-file_path = "day1_1_inputs.txt"
+file_path = "day1_inputs.txt"
 with open(file_path, "r") as file:
     input = [line.strip() for line in file]
 
@@ -46,7 +46,7 @@ values = [
     "9",
 ]
 
-word_to_number: {
+word_to_number = {
     "zero": 0,
     "one": 1,
     "two": 2,
@@ -69,16 +69,30 @@ for line in input:
             # print(coord)
     new_coordinates.append(coord)
 
+coordinates = []
 
 for line in input:
     coord = []
     for value in values:
-        index = line.find(value)
-        if index != -1:
+        index = -1
+        while True:
+            index = line.find(value, index + 1)
+            if index == -1:
+                break
             coord.append((value, index))
     sorted_coord = sorted(coord, key=lambda x: x[1])
     cleaned_coord = [word[0] for word in sorted_coord]
-    print(cleaned_coord)
+    numbers = [str(word_to_number.get(word, word)) for word in cleaned_coord]
+    #   print(line)
+    #   print(numbers)
+
+    clean_numbers = numbers[0] + numbers[-1]
+    coordinates.append(clean_numbers)
+#  print(clean_numbers)
+print(coordinates)
+sum = 0
+for coordinate in coordinates:
+    sum = sum + int(coordinate)
 
 
-# print(new_coordinates)
+print(sum)
