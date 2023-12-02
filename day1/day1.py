@@ -1,11 +1,12 @@
 ## Advent of Code 2023
 ## Day 1
-## Puzzle 1
-## Swantje Moehle
+## SwantjeM
 
 
 ## Part 1
+
 file_path = "day1_inputs.txt"
+
 with open(file_path, "r") as file:
     input = [line.strip() for line in file]
 
@@ -22,7 +23,9 @@ for coordinate in coordinates:
 
 print("Part 1: The final value is: ", sum)
 
+
 ## Part 2
+
 values = [
     "zero",
     "one",
@@ -59,20 +62,12 @@ word_to_number = {
     "nine": 9,
 }
 
-new_coordinates = []
-
-for line in input:
-    coord = []
-    for value in values:
-        if value in line:
-            coord.append(value)
-            # print(coord)
-    new_coordinates.append(coord)
 
 coordinates = []
 
 for line in input:
     coord = []
+    # find all occurences of numbers (in "values"), including those sharing letters or occurring multiple times.
     for value in values:
         index = -1
         while True:
@@ -80,19 +75,21 @@ for line in input:
             if index == -1:
                 break
             coord.append((value, index))
-    sorted_coord = sorted(coord, key=lambda x: x[1])
-    cleaned_coord = [word[0] for word in sorted_coord]
-    numbers = [str(word_to_number.get(word, word)) for word in cleaned_coord]
-    #   print(line)
-    #   print(numbers)
+
+    # sort all numbers in order of occurence
+    coord.sort(key=lambda x: x[1])
+    clean_coord = [word[0] for word in coord]
+
+    # replace all words with corresponding numbers
+    numbers = [str(word_to_number.get(word, word)) for word in clean_coord]
 
     clean_numbers = numbers[0] + numbers[-1]
     coordinates.append(clean_numbers)
-#  print(clean_numbers)
-print(coordinates)
+
+
 sum = 0
 for coordinate in coordinates:
     sum = sum + int(coordinate)
 
 
-print(sum)
+print("Part 2: The final value is: ", sum)
